@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatemeh Askariyeh — Computational Protein Design & Bioinformatics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════
+   TOKENS
+════════════════════════════════ */
+:root {
+  /* Palette: deep forest green + warm off-white + soft sage accents */
+  --bg:        #f9f8f5;       /* warm off-white — easier on eyes than pure white */
+  --bg2:       #f2f0eb;       /* slightly deeper, for alternating sections */
+  --surface:   #ffffff;
+  --border:    #e0dcd4;
+  --border2:   #ccc8be;
+
+  --ink:       #1c1f1a;       /* near-black with green undertone */
+  --ink2:      #3d4238;       /* body text */
+  --ink3:      #6b7268;       /* muted / captions */
+
+  --green:     #2d5a3d;       /* primary accent — deep forest */
+  --green2:    #3d7a54;       /* hover / lighter */
+  --green-lt:  #e8f0eb;       /* tint for tags */
+
+  --serif:  'Lora', Georgia, serif;
+  --sans:   'Inter', system-ui, sans-serif;
+  --mono:   'JetBrains Mono', 'Courier New', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════════════════════
+   NAV
+════════════════════════════════ */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(249,248,245,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1000px; margin: 0 auto;
+  padding: 0 2rem;
+  height: 54px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ink2);
+}
+.nav-logo span { color: var(--green); }
+nav ul { list-style: none; display: flex; gap: 2rem; }
+nav a {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink3);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s;
+}
+nav a:hover { color: var(--green); }
+
+/* ════════════════════════════════
+   LAYOUT HELPERS
+════════════════════════════════ */
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+
+section { padding: 5.5rem 0; }
+section + section { border-top: 1px solid var(--border); }
+
+.sec-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+}
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+
+/* ════════════════════════════════
+   HERO
+════════════════════════════════ */
+#hero {
+  padding: 9rem 0 5.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 5rem;
+  align-items: start;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1.2rem;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.02em;
+}
+h1 em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.hero-statement {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: var(--ink2);
+  font-weight: 300;
+  max-width: 580px;
+  margin-bottom: 1.2rem;
+}
+.hero-statement strong { font-weight: 600; color: var(--ink); }
+
+.hero-cta {
+  margin-top: 2rem;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.btn {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.65rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
+  border-radius: 2px;
+}
+.btn-solid {
+  background: var(--green);
+  color: #fff;
+  border: 1.5px solid var(--green);
+}
+.btn-solid:hover { background: var(--green2); border-color: var(--green2); }
+.btn-ghost {
+  border: 1.5px solid var(--border2);
+  color: var(--ink2);
+}
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+/* sidebar card */
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.hc-header {
+  background: var(--green);
+  padding: 1rem 1.3rem;
+}
+.hc-header p {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.25rem;
+}
+.hc-header strong {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  font-style: italic;
+}
+.hc-body { padding: 0; }
+.hc-row {
+  padding: 0.85rem 1.3rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0.15rem;
+}
+.hc-row:last-child { border-bottom: none; }
+.hc-key {
+  font-family: var(--mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.hc-val {
+  font-size: 0.87rem;
+  color: var(--ink2);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.hc-val a { color: var(--green); text-decoration: none; }
+.hc-val a:hover { text-decoration: underline; }
+
+/* ════════════════════════════════
+   RESEARCH INTEREST
+════════════════════════════════ */
+#interest { background: var(--bg); }
+
+.interest-intro {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--ink2);
+  max-width: 720px;
+  margin-bottom: 3rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--green);
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+  margin-bottom: 3rem;
+}
+.pillar {
+  background: var(--surface);
+  padding: 2rem 1.75rem;
+}
+.pillar-num {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  margin-bottom: 0.8rem;
+}
+.pillar h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+.pillar p {
+  font-size: 0.9rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.bridge-narrative {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem 2.5rem;
+}
+.bridge-narrative h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+}
+.bridge-steps { display: flex; flex-direction: column; gap: 0; }
+.bstep {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 1.2rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--bg2);
+  align-items: start;
+}
+.bstep:last-child { border-bottom: none; }
+.bstep-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--surface);
+  background: var(--green);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.bstep-body h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.bstep-body p {
+  font-size: 0.87rem;
+  color: var(--ink2);
+  line-height: 1.65;
+  font-weight: 300;
+}
+.bstep-body p em { color: var(--green); font-style: normal; font-weight: 500; }
+
+/* ════════════════════════════════
+   EXPERIENCE
+════════════════════════════════ */
+#experience { background: var(--bg2); }
+
+.exp-list { display: flex; flex-direction: column; gap: 0; }
+.exp-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-date {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink3);
+  line-height: 1.6;
+  padding-top: 0.2rem;
+}
+.exp-date .tag-role {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-lt);
+  padding: 0.15rem 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+}
+.exp-content h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.exp-org {
+  font-size: 0.82rem;
+  color: var(--ink3);
+  margin-bottom: 0.9rem;
+  font-weight: 400;
+}
+.exp-content ul { list-style: none; padding: 0; }
+.exp-content ul li {
+  font-size: 0.91rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  padding: 0.3rem 0 0.3rem 1.2rem;
+  border-bottom: 1px solid var(--bg);
+  position: relative;
+  font-weight: 300;
+}
+.exp-content ul li:last-child { border-bottom: none; }
+.exp-content ul li::before {
+  content: '›';
+  position: absolute; left: 0;
+  color: var(--green);
+  font-size: 1rem; line-height: 1.7;
+}
+
+/* ════════════════════════════════
+   RESEARCH
+════════════════════════════════ */
+#research { background: var(--bg); }
+
+.research-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5px;
+  background: var(--border);
+}
+.rcard {
+  background: var(--surface);
+  padding: 2.2rem;
+}
+.rcard-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.8rem;
+}
+.rcard h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 0.85rem;
+}
+.rcard p {
+  font-size: 0.88rem;
+  color: var(--ink2);
+  line-height: 1.72;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-lt);
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+}
+
+/* ════════════════════════════════
+   SKILLS
+════════════════════════════════ */
+#skills { background: var(--bg2); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.sg h3 {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid var(--green);
+}
+.sg ul { list-style: none; }
+.sg ul li {
+  font-size: 0.9rem;
+  color: var(--ink2);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sg ul li:last-child { border-bottom: none; }
+.sg ul li::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--green);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════
+   EDUCATION
+════════════════════════════════ */
+#education { background: var(--bg); }
+
+.edu-list { display: flex; flex-direction: column; gap: 0; }
+.edu-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.edu-item:last-child { border-bottom: none; }
+.edu-period {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink3);
+  padding-top: 0.2rem;
+  line-height: 1.7;
+}
+.edu-content h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.edu-inst {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  margin-bottom: 0.35rem;
+}
+.edu-gpa {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+.edu-thesis {
+  font-size: 0.9rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  font-weight: 300;
+  font-style: italic;
+  padding: 0.75rem 1rem;
+  background: var(--green-lt);
+  border-left: 3px solid var(--green);
+  border-radius: 0 2px 2px 0;
+  margin-bottom: 0.75rem;
+}
+.edu-courses {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+}
+
+/* ════════════════════════════════
+   PUBLICATIONS
+════════════════════════════════ */
+#publications { background: var(--bg2); }
+
+.pub-list { display: flex; flex-direction: column; }
+.pub-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2.5rem;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.pub-item:last-child { border-bottom: none; }
+.pub-side {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  padding-top: 0.15rem;
+}
+.pub-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  width: fit-content;
+}
+.pub-badge.journal { background: #e6f2ec; color: #2d6b47; border: 1px solid #b0d4be; }
+.pub-badge.conf    { background: #fef3e2; color: #8b5e1a; border: 1px solid #e8cc8a; }
+.pub-badge.prep    { background: var(--bg2); color: var(--ink3); border: 1px solid var(--border2); }
+.pub-year {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink3);
+}
+.pub-content h4 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+}
+.pub-content p {
+  font-size: 0.87rem;
+  color: var(--ink3);
+  line-height: 1.6;
+}
+.pub-content em { font-style: italic; }
+
+/* ════════════════════════════════
+   REFERENCES
+════════════════════════════════ */
+#references { background: var(--bg); }
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+}
+.ref-card {
+  background: var(--surface);
+  padding: 1.75rem;
+}
+.ref-role {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.75rem;
+}
+.ref-card h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.ref-card p {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  line-height: 1.6;
+  margin-bottom: 0.15rem;
+}
+.ref-card a { color: var(--green); text-decoration: none; font-size: 0.83rem; }
+.ref-card a:hover { text-decoration: underline; }
+
+/* ════════════════════════════════
+   CONTACT
+════════════════════════════════ */
+#contact {
+  background: var(--green);
+  border-top: none;
+}
+#contact + section { border-top: none; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.contact-left h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500;
+  font-style: italic;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.contact-left p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.contact-right { display: flex; flex-direction: column; gap: 1.25rem; }
+.clink {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  padding: 1rem 1.3rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.clink:hover { background: rgba(255,255,255,0.18); }
+.clink-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.clink-val {
+  font-size: 0.93rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+/* ════════════════════════════════
+   FOOTER
+════════════════════════════════ */
+footer {
+  background: #1e3d2a;
+  padding: 1.5rem 2rem;
+  display: flex; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.3);
+  max-width: 100%;
+}
+
+/* ════════════════════════════════
+   REVEAL ANIMATION
+════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 800px) {
+  .hero-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .pillars, .skills-grid, .ref-grid { grid-template-columns: 1fr; gap: 1px; }
+  .research-grid { grid-template-columns: 1fr; gap: 1px; }
+  .exp-item, .edu-item, .pub-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  nav ul { gap: 1rem; }
+  nav a { font-size: 0.72rem; }
+  .wrap { padding: 0 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">F<span>.</span>Askariyeh</span>
+    <ul>
+      <li><a href="#interest">Research</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow reveal">PhD Applicant · Bioinformatics & Computational Protein Design</div>
+        <h1 class="reveal">Fatemeh<br><em>Askariyeh</em></h1>
+        <p class="hero-statement reveal">
+          I design proteins <strong>before they exist in the lab</strong> — using molecular simulation and computational bioinformatics to predict, engineer, and optimize recombinant proteins, then validate them at the bench. I am seeking a doctoral position to deepen this work at the frontier of <strong>computational protein design and structural bioinformatics</strong>.
+        </p>
+        <p class="hero-statement reveal" style="margin-top:-0.5rem;">
+          My MSc thesis on IL-22R1 mutation design — from free energy simulation in GROMACS to a validated mutant <strong>KD of 1 nM (≥7-fold tighter than literature wild-type affinity)</strong> by SPR — is the foundation. My goal is to extend this into a doctoral research program focused on the intersection of protein engineering, molecular dynamics, and the biological validation of computationally designed therapeutics.
+        </p>
+        <div class="hero-cta reveal">
+          <a href="#interest" class="btn btn-solid">Research Vision</a>
+          <a href="https://www.linkedin.com/in/faskariyeh/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="hero-card">
+          <div class="hc-header">
+            <p>Research Focus</p>
+            <strong>Computational Protein Engineering</strong>
+          </div>
+          <div class="hc-body">
+            <div class="hc-row">
+              <span class="hc-key">Degree</span>
+              <span class="hc-val">MSc Industrial Biotechnology<br>Tehran University · GPA 3.82/4.0</span>
+            </div>
+            <div class="hc-row">
+              <span class="hc-key">Core Tools</span>
+              <span class="hc-val">PyMOL · GROMACS · Osprey · SPR</span>
+            </div>
+            <div class="hc-row">
+              <span class="hc-key">Regulatory Expertise</span>
+              <span class="hc-val">CTD/eCTD authoring · Deficiency response · Comparability assessment</span>
+            </div>
+            <div class="hc-row">
+              <span class="hc-key">PhD Interest</span>
+              <span class="hc-val">Protein simulation · Recombinant protein design · Bioinformatics</span>
+            </div>
+            <div class="hc-row">
+              <span class="hc-key">Current Role</span>
+              <span class="hc-val">Regulatory Affairs Expert<br>CinnaGen Co., Tehran · since Aug 2025</span>
+            </div>
+            <div class="hc-row">
+              <span class="hc-key">Email</span>
+              <span class="hc-val"><a href="mailto:askariyehfatemeh@gmail.com">askariyehfatemeh@gmail.com</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH INTEREST ── -->
+<section id="interest">
+  <div class="wrap">
+    <div class="sec-label reveal">PhD Research Interest</div>
+    <h2 class="reveal">Designing Proteins<br>Computationally. Validating Them Experimentally.</h2>
+
+    <div class="interest-intro reveal">
+      "A 1 nM KD, measured by SPR, is the most convincing sentence I can write — because it means a simulation-guided design decision survived contact with reality. My doctoral research will be built around asking when, why, and how reliably that holds true at scale, using both physics-based and learning-based design methods."
+    </div>
+
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <h3>Molecular Dynamics & Structure Prediction</h3>
+        <p>Using GROMACS and free energy perturbation methods to predict how mutations alter protein structure, stability, and binding energy — validated against a measured 1 nM KD in my thesis work. I have also used AlphaFold/ColabFold for structure prediction, and want to extend into longer-timescale dynamics and conformational ensemble modeling of therapeutic protein-receptor complexes.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <h3>Computational Protein Design</h3>
+        <p>Applying Osprey for sequence-structure-function-guided mutation design — demonstrated by a quantified, SPR-validated affinity gain in IL-22R1. My doctoral interest is extending from targeted point-mutation design toward generative and deep-learning-based design methods (e.g. RFdiffusion-style backbone design, ESM-guided sequence design) for engineering novel binding interfaces.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <h3>Structural Bioinformatics</h3>
+        <p>Integrating sequence analysis, structural modeling, and experimental characterization data to identify and validate design targets. I am particularly interested in receptor-ligand interface engineering for autoimmune and inflammatory disease targets, where decoy-receptor and biosimilar strategies have direct clinical and regulatory relevance.</p>
+      </div>
+    </div>
+
+    <div class="bridge-narrative reveal">
+      <h3>How my background uniquely positions me for PhD research</h3>
+      <div class="bridge-steps">
+        <div class="bstep">
+          <div class="bstep-num">1</div>
+          <div class="bstep-body">
+            <h4>I have already completed a full computational-to-experimental protein design cycle</h4>
+            <p>MSc thesis: designed four mutations in IL-22R1 using <em>PyMOL + GROMACS + Osprey</em>, expressed the mutant in E. coli, characterized it by HPLC and mass spectrometry, and measured a <em>1 nM KD by SPR</em> — at least 7-fold tighter than literature wild-type affinity. This is not background knowledge — it is a quantified, documented research output.</p>
+          </div>
+        </div>
+        <div class="bstep">
+          <div class="bstep-num">2</div>
+          <div class="bstep-body">
+            <h4>I understand how protein characterization data is used in real-world applications</h4>
+            <p>As a Regulatory Affairs Expert, I write the CMC documentation that describes biologics to health authorities. I know exactly what analytical characterization data — <em>PTM profiles, higher-order structure, binding assays</em> — needs to look like, and why it matters beyond the paper.</p>
+          </div>
+        </div>
+        <div class="bstep">
+          <div class="bstep-num">3</div>
+          <div class="bstep-body">
+            <h4>I am motivated by a specific, current research question</h4>
+            <p>Classical mutation design (Osprey, GROMACS-based FEP) gave me a 1 nM, SPR-validated result — but it required months of targeted, hypothesis-driven work. Deep-learning methods like AlphaFold, ESM, and RFdiffusion promise to make this faster and more generalizable. My doctoral question: <em>how do physics-based and learning-based design methods compare in predicting real, experimentally measurable affinity gains</em> — and where does each approach still fail? This is the question I want to pursue at the doctoral level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-label reveal">Experience</div>
+    <h2 class="reveal">Professional History</h2>
+    <div class="exp-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-date">
+          <span class="tag-role">Current</span><br>
+          Aug 2025 –<br>Present
+        </div>
+        <div class="exp-content">
+          <h3>Regulatory Affairs Expert</h3>
+          <div class="exp-org">CinnaGen Co. · Tehran, Iran · Full-time</div>
+          <ul>
+            <li>Author and compile <strong>CTD/eCTD dossiers</strong> — Module 2 Quality Overall Summary, Module 3.2.R regional comparability documentation, and full coordination of <strong>Module 3 (3.2.S Drug Substance and 3.2.P Drug Product)</strong> — for three biologic and peptide products: adalimumab biosimilar (CinnoRA), laronidase ERT (Herozyme®), and cetrorelix acetate (Lixafert).</li>
+            <li>Lead <strong>comparability assessments</strong> between drug substance/product and reference biologics using a Tier 1/2/3 statistical framework (TOST), evaluating physicochemical, biological, and PTM-level equivalence per ICH Q5E and ICH Q6B.</li>
+            <li>Draft <strong>responses to regulatory deficiency letters</strong> from health authorities — translating complex analytical data (LC-MS/MS, RDMW, M6P/CI-MPR activity) into clear, defensible regulatory arguments.</li>
+            <li>Prepare analytical and CMC justifications aligned with EMA, ICH, and EAEU biosimilar guidelines; manage ASMF holder commitments and third-party contractual documentation for deficiency closure.</li>
+            <li>Develop internal <strong>EU-GMP training materials</strong> and staff assessment exams to strengthen organizational regulatory competency.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">
+          <span class="tag-role">Research</span><br>
+          Jul 2023 –<br>Present
+        </div>
+        <div class="exp-content">
+          <h3>Independent Researcher — Antimicrobial Peptide Design</h3>
+          <div class="exp-org">Tehran University</div>
+          <ul>
+            <li>Designing mutations in Magainin2 to increase net positive charge, enhancing electrostatic interaction with negatively charged bacterial membranes via bioinformatics analysis.</li>
+            <li>Synthesized and tested modified peptides against a panel of bacterial strains; manuscript in preparation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">
+          <span class="tag-role">Past Role</span><br>
+          Aug 2023 –<br>Aug 2025
+        </div>
+        <div class="exp-content">
+          <h3>EEG Technologist</h3>
+          <div class="exp-org">Nik Mehr Clinic · Tehran, Iran · Full-time</div>
+          <ul>
+            <li>Recorded and interpreted brain electrical activity for diagnosis of epilepsy, sleep disorders, and neurological injury using the international 10-20 electrode placement system.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-date">
+          <span class="tag-role">Intern</span><br>
+          Jul – Sep 2019
+        </div>
+        <div class="exp-content">
+          <h3>Research Intern · Bioinformatics & Cell Biology</h3>
+          <div class="exp-org">Royan Institute · Tehran, Iran</div>
+          <ul>
+            <li>Genome assembly, sequence alignment, primer design; mammalian cell culture; PCR and histology.</li>
+            <li>Organizing Committee Member, 20th Royan International Congress on Stem Cells (2019).</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RESEARCH PROJECTS ── -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-label reveal">Research Projects</div>
+    <h2 class="reveal">Scientific Work</h2>
+    <div class="research-grid">
+
+      <div class="rcard reveal">
+        <div class="rcard-label">MSc Thesis · 2021–2024 · Tehran University</div>
+        <h3>In Silico Engineering of IL-22R1 for Enhanced Ligand Affinity in Autoimmune Diseases</h3>
+        <p>Introduced four point mutations in IL-22R1 guided by molecular dynamics and free energy calculations to enhance binding affinity with IL-22. Expressed mutant protein in E. coli; characterized by SDS-PAGE, RP-HPLC, SEC-HPLC, and mass spectrometry including PTM analysis. <strong>Measured mutant KD of 1 nM by Surface Plasmon Resonance — at least a 7-fold and up to a 45-fold improvement</strong> over literature-reported wild-type IL-22R1 affinity (7–45 nM range). Identified as a candidate decoy receptor for Rheumatoid Arthritis and Psoriasis.</p>
+        <div class="tags">
+          <span class="tag">PyMOL</span><span class="tag">GROMACS</span><span class="tag">Osprey</span>
+          <span class="tag">SPR</span><span class="tag">RP-HPLC</span><span class="tag">Mass Spec</span><span class="tag">PTM Analysis</span>
+        </div>
+      </div>
+
+      <div class="rcard reveal">
+        <div class="rcard-label">Ongoing Research · 2023–Present</div>
+        <h3>Computational Redesign of Magainin2 Antimicrobial Peptide via Net Charge Modification</h3>
+        <p>Applying bioinformatics-driven mutation design to increase the positive net charge of the Magainin2 antimicrobial peptide, strengthening its electrostatic interaction with negatively charged bacterial membranes. In silico predictions guide peptide synthesis and experimental evaluation across bacterial strains.</p>
+        <div class="tags">
+          <span class="tag">Peptide Engineering</span><span class="tag">Bioinformatics</span>
+          <span class="tag">Electrostatics</span><span class="tag">Antimicrobial</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-label reveal">Technical Skills</div>
+    <h2 class="reveal">Capabilities</h2>
+    <div class="skills-grid">
+      <div class="sg reveal">
+        <h3>Regulatory Affairs</h3>
+        <ul>
+          <li>CTD / eCTD Authoring (Module 2 & 3)</li>
+          <li>Comparability Assessment (ICH Q5E, Tier 1/2/3)</li>
+          <li>Deficiency Response Writing</li>
+          <li>CMC Documentation & Analytical Justification</li>
+          <li>EMA / EAEU Biosimilar Frameworks</li>
+          <li>EU-GMP Compliance (EudraLex Vol. 4)</li>
+        </ul>
+      </div>
+      <div class="sg reveal">
+        <h3>Analytical & Laboratory Methods</h3>
+        <ul>
+          <li>LC-MS/MS Structure Elucidation</li>
+          <li>RP-HPLC / SEC-HPLC / IEX / HIC</li>
+          <li>Mass Spectrometry & PTM Analysis</li>
+          <li>Surface Plasmon Resonance (SPR)</li>
+          <li>SDS-PAGE / ELISA / Western Blot</li>
+          <li>Statistical Equivalence Testing (TOST)</li>
+        </ul>
+      </div>
+      <div class="sg reveal">
+        <h3>Computational & Programming</h3>
+        <ul>
+          <li>Structure Prediction (AlphaFold / ColabFold)</li>
+          <li>Molecular Dynamics (GROMACS)</li>
+          <li>Protein Structure Visualization (PyMOL)</li>
+          <li>Computational Protein Design (Osprey)</li>
+          <li>Familiar with Rosetta design principles</li>
+          <li>HTML / CSS / JavaScript (Expert) · Python (Novice)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="wrap">
+    <div class="sec-label reveal">Education</div>
+    <h2 class="reveal">Academic Background</h2>
+    <div class="edu-list">
+
+      <div class="edu-item reveal">
+        <div class="edu-period">2021 – 2024</div>
+        <div class="edu-content">
+          <h3>MSc in Industrial Biotechnology</h3>
+          <div class="edu-inst">Tehran University · Tehran, Iran</div>
+          <div class="edu-gpa">GPA: 3.82 / 4.0</div>
+          <div class="edu-thesis">
+            Thesis: Cloning and Expression of mIL-22R1 Protein with Increased Binding Affinity to IL-22 in E. coli — combining computational mutation design (PyMOL, GROMACS, Osprey), heterologous protein expression, and biophysical validation by SPR.
+          </div>
+          <div class="edu-courses">
+            <span class="tag">Drug Biotechnology 20/20</span>
+            <span class="tag">Genetics 20/20</span>
+            <span class="tag">Bioinformatics 19.25/20</span>
+            <span class="tag">Immunology 19.25/20</span>
+            <span class="tag">Enzyme Technology 19/20</span>
+            <span class="tag">Downstream Processing 18.75/20</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="edu-item reveal">
+        <div class="edu-period">2016 – 2020</div>
+        <div class="edu-content">
+          <h3>BSc in Cell and Molecular Biology</h3>
+          <div class="edu-inst">Alzahra University · Tehran, Iran</div>
+          <div class="edu-gpa">GPA: 3.57 / 4.0</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ── -->
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-label reveal">Publications & Presentations</div>
+    <h2 class="reveal">Scientific Output</h2>
+    <div class="pub-list">
+
+      <div class="pub-item reveal">
+        <div class="pub-side">
+          <span class="pub-badge journal">Submitted</span>
+          <span class="pub-year">2024</span>
+        </div>
+        <div class="pub-content">
+          <h4>Introduction of Various Cancer Treatment Methods: From the Past to the Present</h4>
+          <p>Hajihassan Z., <strong>Askariyeh F.Z.</strong>, Vazifeshenas S., & Dideh B.D. Submitted to <em>Frontiers in Pharmacology</em>. Manuscript ID: 1457220.</p>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-side">
+          <span class="pub-badge prep">In Prep</span>
+          <span class="pub-year">2024</span>
+        </div>
+        <div class="pub-content">
+          <h4>In Silico Engineering of IL-22R1 for Enhanced Ligand Affinity in Autoimmune Diseases: Expression, Purification, and Structural Analysis</h4>
+          <p><strong>Askariyeh F.Z.</strong>, Hajihassan Z., Arab S.S. Manuscript in preparation.</p>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-side">
+          <span class="pub-badge prep">In Prep</span>
+          <span class="pub-year">2024</span>
+        </div>
+        <div class="pub-content">
+          <h4>Role of Graphene in CRISPR/Cas9</h4>
+          <p>Akhavan O., & <strong>Askariyeh F.Z.</strong> Manuscript in preparation.</p>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-side">
+          <span class="pub-badge conf">Conference</span>
+          <span class="pub-year">Jun 2024</span>
+        </div>
+        <div class="pub-content">
+          <h4>Expression, Purification, and Structural Analysis of Modified IL-22R Protein</h4>
+          <p><strong>Askariyeh F.Z.</strong>, & Hajihassan Z. Iran's 5th Conference on Protein and Peptide Science, May 8–9, 2024.</p>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-side">
+          <span class="pub-badge conf">Conference</span>
+          <span class="pub-year">Feb 2024</span>
+        </div>
+        <div class="pub-content">
+          <h4>Designing Mutated Protein with Increased Binding Affinity to IL-22</h4>
+          <p><strong>Askariyeh F.Z.</strong>, & Hajihassan Z. 3rd International & 12th Iranian Conference on Bioinformatics, February 28–29, 2024.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── REFERENCES ── -->
+<section id="references">
+  <div class="wrap">
+    <div class="sec-label reveal">References</div>
+    <h2 class="reveal">Academic Referees</h2>
+    <div class="ref-grid">
+      <div class="ref-card reveal">
+        <div class="ref-role">Thesis Advisor</div>
+        <h3>Dr. Zahra Hajihassan</h3>
+        <p>Assistant Professor of Biotechnology</p>
+        <p>Faculty of Life Science Technology</p>
+        <p>Tehran University</p>
+        <a href="mailto:Hajihasan@ut.ac.ir">Hajihasan@ut.ac.ir</a>
+      </div>
+      <div class="ref-card reveal">
+        <div class="ref-role">Thesis Co-Advisor</div>
+        <h3>Dr. Seyed Shahriar Arab</h3>
+        <p>Assistant Professor of Bioinformatics</p>
+        <p>Faculty of Biological Sciences</p>
+        <p>University of California San Diego</p>
+        <a href="mailto:ssarab@ucsd.edu">ssarab@ucsd.edu</a>
+      </div>
+      <div class="ref-card reveal">
+        <div class="ref-role">Clinical Supervisor</div>
+        <h3>Dr. Nima Ganji</h3>
+        <p>Neuropsychologist & Clinic Director</p>
+        <p>Nik Mehr Clinic, Tehran</p>
+        <br>
+        <a href="mailto:Nimaganji.psy@gmail.com">Nimaganji.psy@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <h2>"I am looking for a doctoral group where computational protein design and experimental validation are pursued as one continuous scientific practice."</h2>
+        <p>I welcome conversations with faculty working in structural bioinformatics, molecular simulation, recombinant protein design, or therapeutic protein engineering. I bring an unusual combination: hands-on computational design, wet-lab validation experience, and deep understanding of how proteins are analytically characterized for real-world applications.</p>
+      </div>
+      <div class="contact-right reveal">
+        <a href="mailto:askariyehfatemeh@gmail.com" class="clink">
+          <span class="clink-label">Email</span>
+          <span class="clink-val">askariyehfatemeh@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/faskariyeh/" target="_blank" class="clink">
+          <span class="clink-label">LinkedIn</span>
+          <span class="clink-val">linkedin.com/in/faskariyeh ↗</span>
+        </a>
+        <div class="clink" style="cursor:default;">
+          <span class="clink-label">Location</span>
+          <span class="clink-val">Tehran, Iran</span>
+        </div>
+        <div class="clink" style="cursor:default;">
+          <span class="clink-label">PhD Research Interest</span>
+          <span class="clink-val">Bioinformatics · Molecular Simulation · Computational Protein Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Fatemeh Askariyeh · PhD Applicant · Computational Protein Design & Bioinformatics</span>
+  <span>© 2025</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    const sibs = Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'));
+    el.style.transitionDelay = `${sibs.indexOf(el) * 0.08}s`;
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
